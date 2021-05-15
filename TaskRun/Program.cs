@@ -32,6 +32,14 @@ namespace TaskRun
             {
                 Console.WriteLine($"{letter} has length {letter.Length} (task {Task.CurrentId})");
             });
+            
+            Execute();
+            Console.WriteLine("Hello World");
+
+            Method1();
+            Method2();
+            Console.ReadLine();
+            // CallMe();
         }
 
         public static IEnumerable<int> Range(int start, int end, int step)
@@ -40,6 +48,56 @@ namespace TaskRun
             {
                 yield return i;
             }
+        }
+        
+        public static async Task Method1()
+        {
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.WriteLine("Method 1 : " + DateTime.Now.Millisecond);
+                }
+            });
+        }
+
+        public static async Task Method2()
+        {
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.WriteLine("Method 2 : " + DateTime.Now.Millisecond);
+                }
+            });
+        }
+
+        static async void Execute()
+        {
+        // running this method asynchronously.
+            int t = await Task.Run(() => Calculate());
+            Console.WriteLine("Result: " + t);
+        }
+
+        static int Calculate()
+        {
+        // calculate total count of digits in strings.
+            int size = 0;
+            for (int z = 0; z < 100; z++)
+            {
+                for (int i = 0; i < 100000; i++)
+                {
+                    string value = i.ToString();
+                    size += value.Length;
+                }
+            }
+
+            return size;
+        }
+
+        public static void CallMe()
+        {
+            CallMe();
         }
     }
 }
